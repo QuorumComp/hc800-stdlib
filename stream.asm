@@ -1,9 +1,9 @@
 		INCLUDE	"lowlevel/math.i"
 
-		INCLUDE	"kernal/syscall.i"
-
 		INCLUDE	"stream.i"
 		INCLUDE	"string.i"
+		INCLUDE	"syscall.i"
+
 
 ; -- Write data to stream out
 ; --
