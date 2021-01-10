@@ -2,6 +2,8 @@
 
 SYSCALL_I_INCLUDED_ = 1
 
+	INCLUDE	"kernal/keyboard.i"
+
 			RSSET	8
 
 ; -- Reset machine
@@ -31,6 +33,12 @@ KExit			RB	1
 ; -- Outputs:
 ; --    f - "eq" condition if success
 KDebugCharacterOut	RB	1
+
+; -- Read character
+; -- Outputs:
+; --    f - "nz" condition if character available
+; --    t - ASCII character
+KCharacterIn		RB	1
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color

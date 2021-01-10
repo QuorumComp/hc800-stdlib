@@ -16,7 +16,8 @@ MPrintString:	MACRO
 		ld	bc,.string\@
 		jal	StreamDataStringOut
 		j	.end\@
-.string\@	DB	(\1).length,\1
+.string\@	DB	.end\@-.string\@-1
+		DB	\1
 .end\@
 		popa
 		ENDM
