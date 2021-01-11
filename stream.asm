@@ -93,8 +93,7 @@ StreamHexByteOut:
 		ld	d,t
 
 		ld	f,0
-		ld	e,4
-		rs	ft,e
+		rs	ft,4
 		jal	StreamDigitOut
 
 		ld	t,$F
