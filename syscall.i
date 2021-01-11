@@ -2,7 +2,7 @@
 
 SYSCALL_I_INCLUDED_ = 1
 
-	INCLUDE	"kernal/keyboard.i"
+	INCLUDE	"lowlevel/scancodes.i"
 
 			RSSET	8
 
