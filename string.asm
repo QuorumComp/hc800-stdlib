@@ -68,11 +68,85 @@ StringAppendChar:
 		ld	(bc),t
 		ld	f,0
 		add	ft,bc
-		ld	bc,ft
-		ld	t,d
-		ld	(bc),t
+		ld	(ft),d
 
 		pop	bc/de
+		j	(hl)
+
+
+; --
+; -- Append string in code segment to end of string
+; --
+; -- Inputs:
+; --   bc - pointer to string
+; --   de - pointer to string to append
+; --
+; -- Outputs:
+; --    t - new string length
+; --
+		SECTION	"StringAppendChar",CODE
+StringAppendDataString:
+		pusha
+
+		lco	t,(de)
+		add	de,1
+
+		; update destination length
+
+		ld	h,t
+		ld	t,(bc)
+		push	ft
+		add	t,h
+		ld	(bc),t
+		pop	ft
+
+		; adjust destination pointer
+
+		ld	f,0
+		add	ft,1
+		add	ft,bc
+		ld	bc,ft
+
+		cmp	h,0
+		j/eq	.exit
+
+.loop		lco	t,(de)
+		ld	(bc),t
+		add	de,1
+		add	bc,1
+		dj	h,.loop
+
+.exit		popa
+		j	(hl)
+
+
+; --
+; -- Copy string
+; --
+; -- Inputs:
+; --   bc - destination
+; --   de - source
+; --
+		SECTION	"StringCopy",CODE
+StringCopy:
+		pusha
+
+		ld	t,(de)
+		ld	(bc),t
+		add	de,1
+		add	bc,1
+
+		cmp	t,0
+		j/eq	.exit
+
+		ld	f,t
+.loop		ld	t,(de)
+		ld	(bc),t
+		add	de,1
+		add	bc,1
+		dj	f,.loop
+
+.exit		popa
 		j	(hl)
 
 
