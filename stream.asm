@@ -150,7 +150,7 @@ StreamDecimalWordOut:
 		ld	ft,10
 		push	de
 		ld	de,0
-		jal	UnsignedDivide
+		jal	MathDivideUnsigned
 
 		jal	.recurse
 
