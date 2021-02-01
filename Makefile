@@ -1,4 +1,3 @@
-LOWLEVEL = ../firmlib/
 SRCS = stream.asm string.asm
 ASMFLAGS = -g -el -z0 -i../
 TARGET = std.lib
