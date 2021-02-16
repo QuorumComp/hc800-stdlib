@@ -13,13 +13,16 @@ STREAM_I_INCLUDED_ = 1
 ; -- Usage: MPrintString <"My string">
 MPrintString:	MACRO
 		pusha
-		ld	bc,.string\@
+		ld	bc,string\@__
 		jal	StreamDataStringOut
-		j	.end\@
-.string\@	DB	.end\@-.string\@-1
-		DB	\1
-.end\@
 		popa
+
+		PUSHS
+		SECTION "Strings\@",CODE
+string\@__	DB	end\@__-string\@__-1
+		DB	\1
+end\@__
+		POPS
 		ENDM
 
 	ENDC
