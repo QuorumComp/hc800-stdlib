@@ -126,11 +126,11 @@ StreamDigitOut:
 StreamDecimalWordOut:
 		pusha
 
-		ld	de,ft
-		tst	de
+		ld	bc,ft
+		tst	bc
 		j/z	.print_zero
 
-		ld	ft,de
+		ld	ft,bc
 		jal	.recurse
 		j	.exit
 
@@ -143,18 +143,18 @@ StreamDecimalWordOut:
 .recurse
 		pusha
 
-		ld	de,ft
-		tst	de
+		ld	bc,ft
+		tst	bc
 		j/z	.recurse_done
 
 		ld	ft,10
-		push	de
-		ld	de,0
-		jal	MathDivideUnsigned
+		push	bc
+		ld	bc,0
+		jal	MathDivideUnsigned_32_16
 
 		jal	.recurse
 
-		ld	ft,de
+		ld	ft,bc
 		jal	StreamDigitOut
 
 .recurse_done	popa
