@@ -153,12 +153,13 @@ StringCopy:
 ; ---------------------------------------------------------------------------
 ; -- Split string at separator. Destination must be at least source string
 ; -- length + 2. Destination will be filled with a array of strings, the
-; -- last one having a length of 0
+; -- last one having a length of 0. Initial, trailing and consecutive
+; -- separators will be ignored, no empty strings are stored.
 ; --
 ; -- Inputs:
 ; --    t - separator
-; --   bc - destination
-; --   de - source
+; --   bc - destination (BSS)
+; --   de - source (BSS)
 ; --
 		SECTION	"StringSplit",CODE
 StringSplit:
@@ -170,9 +171,7 @@ StringSplit:
 		add	de,1
 
 .next_string	push	bc
-		ld	t,0
-		ld	(bc),t	; length byte
-		add	bc,1
+		add	bc,1	; skip length byte
 
 .next_char	cmp	h,0
 		j/eq	.string_end
@@ -188,10 +187,12 @@ StringSplit:
 		j	.next_char
 
 .string_end	ld	ft,bc
-		swap	bc
+		swap	bc	; restore start of string
 		sub	ft,bc
-		sub	ft,1
+		sub	ft,1	; adjust for length byte
 		ld	(bc),t
+		cmp	t,0
+		swap/eq	bc	; don't store empty string
 		pop	bc
 
 		cmp	h,0
