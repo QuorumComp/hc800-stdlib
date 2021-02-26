@@ -47,6 +47,7 @@ STR_CLEAR:	MACRO	;stringDataPtr
 	GLOBAL	StringAppendChar
 	GLOBAL	StringAppendDataString
 	GLOBAL	StringCopy
+	GLOBAL	StringSplit
 	GLOBAL	DigitToAscii
 
 	ENDC

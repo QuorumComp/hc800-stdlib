@@ -1,6 +1,6 @@
 		INCLUDE	"string.i"
 
-; --
+; ---------------------------------------------------------------------------
 ; -- Clear a string (set it to the empty string)
 ; --
 ; -- Inputs:
@@ -17,7 +17,7 @@ StringClear:
 		j	(hl)
 
 
-; --
+; ---------------------------------------------------------------------------
 ; -- Trim white space off string end
 ; --
 ; -- Inputs:
@@ -48,7 +48,7 @@ StringTrimRight:
 		j	(hl)
 
 
-; --
+; ---------------------------------------------------------------------------
 ; -- Append character to end of string
 ; --
 ; -- Inputs:
@@ -74,7 +74,7 @@ StringAppendChar:
 		j	(hl)
 
 
-; --
+; ---------------------------------------------------------------------------
 ; -- Append string in code segment to end of string
 ; --
 ; -- Inputs:
@@ -120,7 +120,7 @@ StringAppendDataString:
 		j	(hl)
 
 
-; --
+; ---------------------------------------------------------------------------
 ; -- Copy string
 ; --
 ; -- Inputs:
@@ -150,7 +150,61 @@ StringCopy:
 		j	(hl)
 
 
+; ---------------------------------------------------------------------------
+; -- Split string at separator. Destination must be at least source string
+; -- length + 2. Destination will be filled with a array of strings, the
+; -- last one having a length of 0
 ; --
+; -- Inputs:
+; --    t - separator
+; --   bc - destination
+; --   de - source
+; --
+		SECTION	"StringSplit",CODE
+StringSplit:
+		pusha
+
+		ld	l,t	; l = separator
+		ld	t,(de)
+		ld	h,t	; h = string length remaining
+		add	de,1
+
+.next_string	push	bc
+		ld	t,0
+		ld	(bc),t	; length byte
+		add	bc,1
+
+.next_char	cmp	h,0
+		j/eq	.string_end
+
+		ld	t,(de)
+		add	de,1
+		sub	h,1
+		cmp	t,l
+		j/eq	.string_end
+
+		ld	(bc),t
+		add	bc,1
+		j	.next_char
+
+.string_end	ld	ft,bc
+		swap	bc
+		sub	ft,bc
+		sub	ft,1
+		ld	(bc),t
+		pop	bc
+
+		cmp	h,0
+		j/ne	.next_string
+
+		ld	t,0
+		ld	(bc),t	; length byte
+
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Convert digit (any base) to ASCII
 ; --
 ; -- Inputs:
