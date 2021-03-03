@@ -173,10 +173,11 @@ StreamMemoryDump:
 
 		push	ft
 		rs	ft,4
-		jal	StreamHexWordOut
-		ld	de,ft
+		ld	de,ft		; de = number of 16 byte lines to print
 		tst	de
 		j/eq	.lines_done
+
+		; adjust loop counters
 
 		sub	de,1
 		add	d,1
@@ -193,7 +194,7 @@ StreamMemoryDump:
 		dj	d,.full_lines
 
 .lines_done	pop	ft
-		and	t,$F
+		and	t,$F		; t = number of bytes to print at last line
 		cmp	t,0
 		j/eq	.partial_done
 
@@ -207,7 +208,7 @@ StreamMemoryDump:
 		ld	f,t
 		add	t,t
 		add	t,f
-		add	t,1	; spaces to print
+		add	t,1		; t = spaces to print
 
 		ld	f,t
 		ld	t,' '
