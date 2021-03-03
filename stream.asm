@@ -161,3 +161,84 @@ StreamDecimalWordOut:
 		j	(hl)
 
 
+; -- Dump memory as hexadecimal and ASCII
+; --
+; -- Inputs:
+; --   ft - number of bytes to dump (max 4096)
+; --   bc - pointer to memory
+; --
+		SECTION	"StreamMemoryDump",CODE
+StreamMemoryDump:
+		pusha
+
+		push	ft
+		rs	ft,4
+		jal	StreamHexWordOut
+		ld	de,ft
+		tst	de
+		j/eq	.lines_done
+
+		sub	de,1
+		add	d,1
+		add	e,1
+
+.full_lines	ld	f,16
+		jal	.hex_dump
+		ld	t,' '
+		sys	KCharacterOut
+		jal	.char_dump
+		add	bc,16
+
+		dj	e,.full_lines
+		dj	d,.full_lines
+
+.lines_done	pop	ft
+		and	t,$F
+		cmp	t,0
+		j/eq	.partial_done
+
+		ld	f,t
+		jal	.hex_dump
+
+		push	ft
+
+		sub	t,16
+		neg	t
+		ld	f,t
+		add	t,t
+		add	t,f
+		add	t,1	; spaces to print
+
+		ld	f,t
+		ld	t,' '
+.space_loop	sys	KCharacterOut
+		dj	f,.space_loop
+		pop	ft
+
+		jal	.char_dump
+
+.partial_done	popa
+		j	(hl)
+
+.hex_dump	pusha
+.hex_loop	ld	t,(bc)
+		add	bc,1
+		jal	StreamHexByteOut
+		ld	t,' '
+		sys	KCharacterOut
+		dj	f,.hex_loop
+		popa
+		j	(hl)
+
+.char_dump	pusha
+		ld	t,f
+		ld	e,t
+.char_loop	ld	t,(bc)
+		add	bc,1
+		cmp	t,' '
+		ld/ltu	t,'.'
+		sys	KCharacterOut
+		dj	e,.char_loop
+		MNewLine
+		popa
+		j	(hl)
