@@ -4,6 +4,23 @@ SYSCALL_I_INCLUDED_ = 1
 
 	INCLUDE	"lowlevel/scancodes.i"
 
+BLOCKDEVICE_SDA		EQU	0
+BLOCKDEVICE_SDA0	EQU	1
+BLOCKDEVICE_SDA1	EQU	2
+BLOCKDEVICE_SDA2	EQU	3
+BLOCKDEVICE_SDB		EQU	4
+BLOCKDEVICE_SDB0	EQU	5
+BLOCKDEVICE_SDB1	EQU	6
+BLOCKDEVICE_SDB2	EQU	7
+
+TOTAL_BLOCKDEVICES	EQU	8
+
+			RSRESET
+bdinf_Valid		RB	1
+bdinf_Size		RB	4
+bdinf_Name		RB	8
+bdinf_SIZEOF		RB	0
+
 			RSSET	8
 
 ; -- Reset machine
@@ -39,6 +56,13 @@ KDebugCharacterOut	RB	1
 ; --    f - "nz" condition if character available
 ; --    t - ASCII character
 KCharacterIn		RB	1
+
+; -- Get block device information
+; --    t - block device identifier
+; --   bc - block device information structure
+; -- Outputs:
+; --    f - "eq" condition if device exists and information structure filled
+KGetBlockDevice		RB	1
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
