@@ -21,6 +21,18 @@ bdinf_Size		RB	4
 bdinf_Name		RB	8
 bdinf_SIZEOF		RB	0
 
+MAX_LABEL_LENGTH	EQU	16
+MAX_VOLUME_NAME_LENGTH	EQU	8
+
+			RSRESET
+volinf_Label		RB	MAX_LABEL_LENGTH
+volinf_Name		RB	MAX_VOLUME_NAME_LENGTH
+volinf_BlockDevice	RB	1	; $FF if not block device
+volinf_Free		RB	4
+volinf_Used		RB	8
+volinf_Size		RB	4
+volinf_SIZEOF		RB	0
+
 			RSSET	8
 
 ; -- Reset machine
@@ -63,6 +75,14 @@ KCharacterIn		RB	1
 ; -- Outputs:
 ; --    f - "eq" condition if device exists and information structure filled
 KGetBlockDevice		RB	1
+
+; -- Get block device information
+; --    t - volume index
+; --   bc - volume information structure
+; -- Outputs:
+; --    f - "eq" condition if volume exists and information structure filled
+; --        "ne" condition when volume index and further indices do not exist
+KGetVolume		RB	1
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
