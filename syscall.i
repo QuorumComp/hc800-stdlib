@@ -33,56 +33,144 @@ volinf_Used		RB	8
 volinf_Size		RB	4
 volinf_SIZEOF		RB	0
 
-			RSSET	8
+		RSRESET
+file_System	RW	1
+file_Length	RB	4
+file_Offset	RB	4
+file_Error	RB	1
+file_Flags	RB	1
+file_PRIVATE	RB	4
+file_SIZEOF	RB	0
 
+FFLAG_DIR	EQU	$01
+
+
+		RSRESET
+dir_System	RW	1
+dir_Error	RB	1
+dir_Flags	RB	1
+dir_Length	RB	4
+dir_Filename	RB	256
+dir_PRIVATE	RB	4
+dir_SIZEOF	RB	0
+
+
+
+; ---------------------------------------------------------------------------
+; -- Jump vectors
+; --
+
+			RSSET	8	; skip interrupt vectors
+
+; ---------------------------------------------------------------------------
 ; -- Reset machine
+; --
 KReset			RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Clear the text screen
+; --
 KClearScreen		RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Set attributes
+; --
+; -- Inputs:
 ; --   b - mask of attributes to set
 ; --   c - attribute value
+; --
 KTextSetAttributes	RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Output character (incl. control codes)
+; --
+; -- Inputs:
 ; --   t - character to print
+; --
 KCharacterOut		RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Execute command line
+; --
+; -- Inputs:
 ; --  bc - command line
+; --
 KExecute		RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Exit client to kernal
+; --
 KExit			RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Print debug character
+; --
+; -- Inputs:
 ; --   t - character to print
+; --
 ; -- Outputs:
 ; --    f - "eq" condition if success
+; --
 KDebugCharacterOut	RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Read character
+; --
 ; -- Outputs:
 ; --    f - "nz" condition if character available
 ; --    t - ASCII character
+; --
 KCharacterIn		RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Get block device information
+; --
+; -- Inputs:
 ; --    t - block device identifier
 ; --   bc - block device information structure
+; --
 ; -- Outputs:
 ; --    f - "eq" condition if device exists and information structure filled
+; --
 KGetBlockDevice		RB	1
 
+; ---------------------------------------------------------------------------
 ; -- Get block device information
+; --
+; -- Inputs:
 ; --    t - volume index
 ; --   bc - volume information structure
+; --
 ; -- Outputs:
 ; --    f - "eq" condition if volume exists and information structure filled
 ; --        "ne" condition when volume index and further indices do not exist
+; --
 KGetVolume		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Open directory
+; --
+; -- Inputs:
+; --   bc - pointer to directory struct
+; --
+; -- Output:
+; --    f - "eq" if directory could be opened. Directory struct is filled in
+; --        with information on first file
+; --
+KOpenDirectory		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Read next file information from directory
+; --
+; -- Inputs:
+; --   bc - pointer to directory struct
+; --
+; -- Output:
+; --    f - "eq" if next file information could be retrieved. Directory
+; --        struct is filled in with information on file.
+; --        "ne" when no more files present.
+; --
+KReadDirectory		RB	1
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
