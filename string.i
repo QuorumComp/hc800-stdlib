@@ -23,16 +23,14 @@ DC_STR:		MACRO	;string
 
 ; -- Inputs:
 ; --   bc - pointer to destination
-STR_APPEND:	MACRO	;string
+MStringAppend:	MACRO	;string
 		pusha
-		ld	de,.string\@
+		ld	de,{ DC_STR \1 }
 		jal	StringAppendDataString
-		j	.end\@
-.string\@	DC_STR	\1
-.end\@		popa
+		popa
 		ENDM
 
-STR_CLEAR:	MACRO	;stringDataPtr
+MStringClear:	MACRO	;stringDataPtr
 		pusha
 		ld	bc,\1
 		ld	t,0
@@ -40,7 +38,11 @@ STR_CLEAR:	MACRO	;stringDataPtr
 		popa
 		ENDM
 
-
+MDigitToAscii:	MACRO
+		cmp	t,10
+		add	t,'0'
+		add/geu	t,'A'-'0'
+		ENDM
 
 	GLOBAL	StringClear
 	GLOBAL	StringTrimRight
