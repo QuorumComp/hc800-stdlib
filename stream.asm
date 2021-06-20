@@ -68,6 +68,23 @@ StreamBssStringOut:
 ; -- Print value as hexadecimal
 ; --
 ; -- Inputs:
+; --   ft:ft' - value to print
+		SECTION	"StreamHexLongOut",CODE
+StreamHexLongOut:
+		push	hl
+
+		jal	StreamHexWordOut
+		swap	ft
+		jal	StreamHexWordOut
+		swap	ft
+
+		pop	hl
+		j	(hl)
+
+
+; -- Print value as hexadecimal
+; --
+; -- Inputs:
 ; --   ft - value to print
 		SECTION	"StreamHexWordOut",CODE
 StreamHexWordOut:

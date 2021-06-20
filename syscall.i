@@ -29,7 +29,7 @@ volinf_Label		RB	MAX_LABEL_LENGTH
 volinf_Name		RB	MAX_VOLUME_NAME_LENGTH
 volinf_BlockDevice	RB	1	; $FF if not block device
 volinf_Free		RB	4
-volinf_Used		RB	8
+volinf_Used		RB	4
 volinf_Size		RB	4
 volinf_SIZEOF		RB	0
 
