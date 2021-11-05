@@ -27,4 +27,11 @@ end\@__
 		POPS
 		ENDM
 
+MPrintChar:	MACRO
+		pusha
+		ld	t,\1
+		sys	KCharacterOut
+		popa
+		ENDM
+
 	ENDC

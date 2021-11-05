@@ -147,7 +147,6 @@ StreamDecimalWordOut:
 		tst	bc
 		j/z	.print_zero
 
-		ld	ft,bc
 		jal	.recurse
 		j	.exit
 
@@ -158,20 +157,22 @@ StreamDecimalWordOut:
 		j	(hl)
 
 .recurse
+		; input: bc = value to print
 		pusha
 
-		ld	bc,ft
 		tst	bc
 		j/z	.recurse_done
 
-		ld	ft,10
-		push	bc
-		ld	bc,0
-		jal	MathDivideUnsigned_32_16
+		ld	ft,bc
+		MZeroExtend ft
+		ld	bc,10
+		jal	MathDivideSigned_32by16_q16_r16
 
+		swap	ft
+		ld	bc,ft
 		jal	.recurse
 
-		ld	ft,bc
+		pop	ft
 		jal	StreamDigitOut
 
 .recurse_done	popa
