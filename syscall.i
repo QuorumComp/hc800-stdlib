@@ -151,7 +151,8 @@ KGetVolume		RB	1
 ; -- Open directory
 ; --
 ; -- Inputs:
-; --   bc - pointer to directory struct
+; --   ft - pointer to directory struct
+; --   bc - path
 ; --
 ; -- Output:
 ; --    f - "eq" if directory could be opened. Directory struct is filled in
@@ -163,7 +164,7 @@ KOpenDirectory		RB	1
 ; -- Read next file information from directory
 ; --
 ; -- Inputs:
-; --   bc - pointer to directory struct
+; --   ft - pointer to directory struct
 ; --
 ; -- Output:
 ; --    f - "eq" if next file information could be retrieved. Directory
