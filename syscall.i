@@ -28,6 +28,7 @@ MAX_VOLUME_NAME_LENGTH	EQU	8
 volinf_Label		RB	MAX_LABEL_LENGTH
 volinf_Name		RB	MAX_VOLUME_NAME_LENGTH
 volinf_BlockDevice	RB	1	; $FF if not block device
+volinf_CommonSize	RB	0	; the size of data in common with fs_
 volinf_Free		RB	4
 volinf_Used		RB	4
 volinf_Size		RB	4
