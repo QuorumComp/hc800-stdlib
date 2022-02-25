@@ -6,10 +6,10 @@ STRING_SIZE	EQU	256
 
 DS_STR:		MACRO	;maxLength
 		IF	__NARG==0
-			DS	256
+			DS	STRING_SIZE
 		ELSE
 			IF	(\1)>255
-				FAIL "Strings must be shorter than 255 characters"
+				FAIL "Strings must be shorter than {STRING_SIZE-1} characters"
 			ENDC
 			DS	1+(\1)
 		ENDC
@@ -51,5 +51,8 @@ MDigitToAscii:	MACRO
 	GLOBAL	StringCopy
 	GLOBAL	StringSplit
 	GLOBAL	DigitToAscii
+
+	GLOBAL	MemoryCharN
+	GLOBAL	MemoryCompareN
 
 	ENDC

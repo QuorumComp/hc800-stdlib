@@ -1,3 +1,5 @@
+		INCLUDE	"lowlevel/rc800.i"
+
 		INCLUDE	"string.i"
 
 ; ---------------------------------------------------------------------------
@@ -202,6 +204,75 @@ StringSplit:
 		ld	(bc),t	; length byte
 
 		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Find character in memory
+; --
+; -- Inputs:
+; --   ft - memory
+; --    b - character
+; --    c - maximum length
+; --
+; -- Outputs:
+; --    f - "eq" if found
+; --  ft' - pointer to character or non existant if f "ne"
+; --
+		SECTION	"MemoryCharN",CODE
+MemoryCharN:
+		push	bc-hl
+
+		ld	de,ft
+.loop		ld	t,(de)
+		cmp	t,d
+		j/eq	.found
+		add	de,1
+		dj	c,.loop
+
+		ld	f,FLAGS_NE
+		j	.exit
+		
+.found		ld	ft,de
+		push	ft
+		ld	f,FLAGS_EQ
+
+.exit		pop	bc-hl
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Compare memory content
+; --
+; -- Inputs:
+; --   ft - memory
+; --   bc - memory
+; --    d - bytes to compare
+; --
+; -- Outputs:
+; --    f - flags set according to result of comparing memory pointed to by
+; --        ft and bc
+; --
+		SECTION	"MemoryCompareN",CODE
+MemoryCompareN:
+		push	bc-hl
+
+		ld	hl,ft
+
+.loop		ld	t,(bc)
+		add	bc,1
+		ld	f,t
+		ld	t,(hl)
+		add	hl,1
+
+		cmp	t,f
+		j/ne	.done
+
+		dj	d,.loop
+
+		ld	f,FLAGS_EQ
+
+.done		pop	bc-hl
 		j	(hl)
 
 
