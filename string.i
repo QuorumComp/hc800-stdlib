@@ -47,6 +47,7 @@ MDigitToAscii:	MACRO
 	GLOBAL	StringClear
 	GLOBAL	StringTrimRight
 	GLOBAL	StringAppendChar
+	GLOBAL	StringAppendChars
 	GLOBAL	StringAppendDataString
 	GLOBAL	StringCopy
 	GLOBAL	StringSplit

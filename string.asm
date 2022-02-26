@@ -77,16 +77,50 @@ StringAppendChar:
 
 
 ; ---------------------------------------------------------------------------
+; -- Append character to end of string
+; --
+; -- Inputs:
+; --   ft - pointer to string
+; --   bc - pointer to chars (BSS)
+; --    d - number of chars
+; --
+		SECTION	"StringAppendChars",CODE
+StringAppendChars:
+		pusha
+
+		; set new length
+		ld	hl,ft
+		ld	t,(hl)
+		add	t,d
+		ld	(hl),t
+		add	hl,1
+
+		; adjust dest pointer
+		ld	f,0
+		add	ft,hl
+		ld	hl,ft
+
+		add	d,1
+		j	.start
+
+.loop		ld	t,(bc)
+		add	bc,1
+		ld	(hl),t
+		add	hl,1
+.start		dj	d,.loop
+
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Append string in code segment to end of string
 ; --
 ; -- Inputs:
 ; --   bc - pointer to string
 ; --   de - pointer to string to append
 ; --
-; -- Outputs:
-; --    t - new string length
-; --
-		SECTION	"StringAppendChar",CODE
+		SECTION	"StringAppendDataString",CODE
 StringAppendDataString:
 		pusha
 
