@@ -16,9 +16,13 @@ DS_STR:		MACRO	;maxLength
 		ENDM
 
 DC_STR:		MACRO	;string
-		DB	.end\@-.start\@
-.start\@	DB	\1
+		IF	\1==""
+			DB	0
+		ELSE
+			DB	.end\@-.start\@
+.start\@		DB	\1
 .end\@		
+		ENDC
 		ENDM
 
 ; -- Inputs:
