@@ -174,6 +174,15 @@ KOpenDirectory		RB	1
 ; --
 KReadDirectory		RB	1
 
+; ---------------------------------------------------------------------------
+; -- Print error description
+; --
+; -- Inputs:
+; --    t - Error code
+; --
+; --
+KPrintError		RB	1
+
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
 MSetColor:	MACRO
