@@ -1,3 +1,6 @@
+		INCLUDE "kernal/uart_commands.i"
+		INCLUDE "kernal/uart_commands_disabled.i"
+
 		INCLUDE	"lowlevel/rc800.i"
 
 		INCLUDE	"string.i"
@@ -91,14 +94,19 @@ StringAppendChars:
 		; set new length
 		ld	hl,ft
 		ld	t,(hl)
+		push	ft
 		add	t,d
 		ld	(hl),t
 		add	hl,1
 
 		; adjust dest pointer
+		pop	ft
 		ld	f,0
 		add	ft,hl
 		ld	hl,ft
+
+		MDebugRegisters
+		MDebugMemory bc,32
 
 		add	d,1
 		j	.start
@@ -257,9 +265,12 @@ StringSplit:
 MemoryCharN:
 		push	bc-hl
 
+		MDebugPrint <"MemoryCharN entry\n">
+		MDebugRegisters
+
 		ld	de,ft
 .loop		ld	t,(de)
-		cmp	t,d
+		cmp	t,b
 		j/eq	.found
 		add	de,1
 		dj	c,.loop
