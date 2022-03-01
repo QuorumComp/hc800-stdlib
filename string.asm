@@ -80,7 +80,7 @@ StringAppendChar:
 
 
 ; ---------------------------------------------------------------------------
-; -- Append character to end of string
+; -- Append characters to end of string
 ; --
 ; -- Inputs:
 ; --   ft - pointer to string
@@ -116,6 +116,28 @@ StringAppendChars:
 		ld	(hl),t
 		add	hl,1
 .start		dj	d,.loop
+
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Append string in BSS segment to end of string
+; --
+; -- Inputs:
+; --   ft - pointer to string
+; --   bc - pointer to chars (BSS)
+; --
+		SECTION	"StringAppendString",CODE
+StringAppendString:
+		pusha
+
+		exg	ft,bc
+		ld	d,(ft)
+		add	ft,1
+		exg	ft,bc
+
+		jal	StringAppendChars
 
 		popa
 		j	(hl)
@@ -276,6 +298,75 @@ MemoryCharN:
 		dj	c,.loop
 
 		ld	f,FLAGS_NE
+		j	.exit
+		
+.found		ld	ft,de
+		push	ft
+		ld	f,FLAGS_EQ
+
+.exit		pop	bc-hl
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Find character in string, search from the end
+; --
+; -- Inputs:
+; --   ft - memory
+; --    b - character
+; --
+; -- Outputs:
+; --    f - "eq" if found
+; --  ft' - pointer to character or non existant if f "ne"
+; --
+		SECTION	"StringReverseChar",CODE
+StringReverseChar:
+		push	bc-hl
+
+		ld	c,(ft)
+		add	ft,1
+		jal	MemoryReverseCharN
+
+		pop	bc-hl
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Find character in memory, searching from the end
+; --
+; -- Inputs:
+; --   ft - memory
+; --    b - character
+; --    c - maximum length
+; --
+; -- Outputs:
+; --    f - "eq" if found
+; --  ft' - pointer to character or non existant if f "ne"
+; --
+		SECTION	"MemoryCharN",CODE
+MemoryReverseCharN:
+		push	bc-hl
+
+		MDebugPrint <"MemoryReverseCharN entry\n">
+		MDebugRegisters
+
+		ld	de,ft
+
+		cmp	c,0
+		j/eq	.empty
+
+		ld	f,0
+		ld	t,c
+		add	ft,de
+		ld	de,ft
+
+.loop		ld	t,(de)
+		cmp	t,b
+		j/eq	.found
+		sub	de,1
+		dj	c,.loop
+
+.empty		ld	f,FLAGS_NE
 		j	.exit
 		
 .found		ld	ft,de

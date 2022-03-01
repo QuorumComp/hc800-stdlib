@@ -52,12 +52,15 @@ MDigitToAscii:	MACRO
 	GLOBAL	StringTrimRight
 	GLOBAL	StringAppendChar
 	GLOBAL	StringAppendChars
+	GLOBAL	StringAppendString
 	GLOBAL	StringAppendDataString
 	GLOBAL	StringCopy
 	GLOBAL	StringSplit
+	GLOBAL	StringReverseChar
 	GLOBAL	DigitToAscii
 
 	GLOBAL	MemoryCharN
+	GLOBAL	MemoryReverseCharN
 	GLOBAL	MemoryCompareN
 
 	ENDC
