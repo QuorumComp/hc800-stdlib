@@ -359,6 +359,7 @@ MemoryReverseCharN:
 		ld	t,c
 		add	ft,de
 		ld	de,ft
+		sub	de,1
 
 .loop		ld	t,(de)
 		cmp	t,b
