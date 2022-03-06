@@ -180,8 +180,16 @@ KReadDirectory		RB	1
 ; -- Inputs:
 ; --    t - Error code
 ; --
-; --
 KPrintError		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Get command line tokens. Buffer with be filled with a list of strings,
+; -- an empty string denotes the end of the list
+; --
+; -- Inputs:
+; --   ft - pointer to destination (BSS), 256 bytes
+; --
+KGetCommandLine		RB	1
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
@@ -224,10 +232,8 @@ MNewLine:	MACRO
 ; -- Print a debug string to UART
 MDebugPrint:	MACRO
 		pusha
-		j	.skip\@
-.string\@	DB	\1
-.skip\@		ld	d,.skip\@-.string\@
-		ld	bc,.string\@
+		ld	d,\1.length
+		ld	bc,{ DB \1 }
 .next\@		lco	t,(bc)
 		add	bc,1
 		sys	KDebugCharacterOut
