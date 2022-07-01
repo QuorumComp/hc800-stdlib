@@ -40,7 +40,7 @@ file_Length	RB	4
 file_Offset	RB	4
 file_Error	RB	1
 file_Flags	RB	1
-file_PRIVATE	RB	4
+file_PRIVATE	RB	16
 file_SIZEOF	RB	0
 
 FFLAG_DIR	EQU	$01
@@ -52,7 +52,7 @@ dir_Error	RB	1
 dir_Flags	RB	1
 dir_Length	RB	4
 dir_Filename	RB	256
-dir_PRIVATE	RB	4
+dir_PRIVATE	RB	16
 dir_SIZEOF	RB	0
 
 
