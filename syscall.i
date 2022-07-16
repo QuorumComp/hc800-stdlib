@@ -55,6 +55,7 @@ dir_Filename	RB	256
 dir_PRIVATE	RB	16
 dir_SIZEOF	RB	0
 
+DFLAG_DIR	EQU	$01
 
 
 ; ---------------------------------------------------------------------------
