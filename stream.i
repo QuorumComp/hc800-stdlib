@@ -9,6 +9,7 @@ STREAM_I_INCLUDED_ = 1
 	GLOBAL	StreamHexWordOut
 	GLOBAL	StreamHexLongOut
 	GLOBAL	StreamDecimalWordOut
+	GLOBAL	StreamDecimalLongOut
 	GLOBAL	StreamMemoryDump
 
 ; -- Print a string

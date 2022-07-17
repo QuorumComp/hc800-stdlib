@@ -120,6 +120,7 @@ StreamHexByteOut:
 		popa
 		j	(hl)
 
+; ---------------------------------------------------------------------------
 ; -- Print single digit
 ; --
 ; --    t - digit ($0-$F)
@@ -135,10 +136,12 @@ StreamDigitOut:
 
 
 
+; ---------------------------------------------------------------------------
 ; -- Print value as decimal
 ; --
 ; -- Inputs:
 ; --   ft - value to print
+; --
 		SECTION	"StreamDecimalWordOut",CODE
 StreamDecimalWordOut:
 		pusha
@@ -179,6 +182,75 @@ StreamDecimalWordOut:
 		j	(hl)
 
 
+
+; ---------------------------------------------------------------------------
+; -- Print value as decimal
+; --
+; -- Inputs:
+; --   ft:ft' - value to print (consumed)
+; --
+		SECTION	"StreamDecimalLongOut",CODE
+StreamDecimalLongOut:
+		pusha
+
+		swap	ft
+		ld	bc,ft
+		swap	ft
+		push	ft
+		or	t,b
+		or	t,c
+		tst	ft
+		j/z	.print_zero
+
+		pop	ft
+		jal	.recurse
+		j	.exit
+
+.print_zero	pop	ft
+		ld	t,0
+		jal	StreamDigitOut
+
+.exit		popa
+		j	(hl)
+
+.recurse
+		; input: ft:ft' = value to print
+		pusha
+
+		swap	ft
+		ld	bc,ft
+		swap	ft
+		push	ft
+		or	t,b
+		or	t,c
+		tst	ft
+		j/z	.recurse_done
+
+		pop	ft
+
+		ld	bc,10
+		push	bc
+		ld	bc,0
+		jal	MathDivideUnsigned_32by32_q32_r32
+
+		pop	ft	; discard hi word of remainder, it is zero
+		ld	bc,ft
+		pop	ft
+
+		jal	.recurse
+
+		ld	ft,bc
+		jal	StreamDigitOut
+
+		popa
+		j	(hl)
+
+.recurse_done	pop	ft
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Dump memory as hexadecimal and ASCII
 ; --
 ; -- Inputs:
