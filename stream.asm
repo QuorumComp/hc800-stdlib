@@ -191,7 +191,7 @@ StreamDecimalWordOut:
 ; --
 		SECTION	"StreamDecimalLongOut",CODE
 StreamDecimalLongOut:
-		pusha
+		push	bc-hl
 
 		swap	ft
 		ld	bc,ft
@@ -215,7 +215,7 @@ StreamDecimalLongOut:
 
 .recurse
 		; input: ft:ft' = value to print
-		pusha
+		push	bc-hl
 
 		swap	ft
 		ld	bc,ft
@@ -232,6 +232,7 @@ StreamDecimalLongOut:
 		push	bc
 		ld	bc,0
 		jal	MathDivideUnsigned_32by32_q32_r32
+		pop	bc
 
 		pop	ft	; discard hi word of remainder, it is zero
 		ld	bc,ft
@@ -242,11 +243,10 @@ StreamDecimalLongOut:
 		ld	ft,bc
 		jal	StreamDigitOut
 
-		popa
+		pop	bc-hl
 		j	(hl)
 
-.recurse_done	pop	ft
-		popa
+.recurse_done	popa
 		j	(hl)
 
 
