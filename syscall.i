@@ -192,6 +192,42 @@ KPrintError		RB	1
 ; --
 KGetCommandLine		RB	1
 
+; ---------------------------------------------------------------------------
+; -- Open file
+; --
+; -- Inputs:
+; --   ft - file name path
+; --   bc - file struct
+; --
+; -- Output:
+; --    t - Error code
+; --    f - "eq" if success
+; --
+KOpenFile		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Close file
+; --
+; -- Inputs:
+; --   ft - file struct
+; --
+KCloseFile		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Read from file offset
+; --
+; -- Inputs:
+; --   ft - bytes to read
+; --   bc - pointer to file struct
+; --   de - destination pointer (data segment)
+; --
+; -- Output:
+; --    t - Error code
+; --    f - "eq" if success
+; --
+KReadFile		RB	1
+
+
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
 MSetColor:	MACRO
@@ -201,6 +237,10 @@ MSetColor:	MACRO
 		sys	KTextSetAttributes
 		popa
 		ENDM
+
+VATTR_ITALIC	EQU	$08
+VATTR_BOLD	EQU	$04
+VATTR_UNDERLINE	EQU	$02
 
 ; -- Set attribute bits
 ; -- Usage: MSetAttribute attribute
@@ -213,7 +253,7 @@ MSetAttribute:	MACRO
 		ENDM
 
 ; -- Clear attribute bits
-; -- Usage: MSetAttribute attribute
+; -- Usage: MClearAttribute attribute
 MClearAttribute:	MACRO
 		pusha
 		ld	b,(\1)
