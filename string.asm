@@ -6,6 +6,45 @@
 		INCLUDE	"string.i"
 
 ; ---------------------------------------------------------------------------
+; -- Compare two strings
+; --
+; -- Inputs:
+; --   ft - pointer to string
+; --   bc - pointer to string
+; --
+; -- Output:
+; --    f - result of lexical comparison, use unsigned condition codes
+; --
+		SECTION	"StringCompare",CODE
+StringCompare:
+		push	bc-hl
+
+		ld	de,ft
+
+		ld	t,(bc+)
+		ld	f,t
+		ld	t,(de+)
+		cmp	t,f
+		push	ft
+		ld/ltu	t,f
+		ld	l,t
+
+.loop		ld	t,(bc+)
+		ld	f,t
+		ld	t,(de+)
+		cmp	t,f
+		j/ne	.exit
+		dj	l,.loop
+
+		popa
+		j	(hl)
+
+.exit		swap	ft
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Clear a string (set it to the empty string)
 ; --
 ; -- Inputs:

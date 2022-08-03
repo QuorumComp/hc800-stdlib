@@ -48,6 +48,7 @@ MDigitToAscii:	MACRO
 		add/geu	t,'A'-'0'
 		ENDM
 
+	GLOBAL	StringCompare
 	GLOBAL	StringClear
 	GLOBAL	StringTrimRight
 	GLOBAL	StringAppendChar
