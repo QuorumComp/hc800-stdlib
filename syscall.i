@@ -228,6 +228,14 @@ KCloseFile		RB	1
 KReadFile		RB	1
 
 
+; ---------------------------------------------------------------------------
+; -- Close directory
+; --
+; -- Inputs:
+; --   ft - directory struct
+; --
+KCloseDirectory		RB	1
+
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
 MSetColor:	MACRO
