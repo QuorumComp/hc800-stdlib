@@ -62,6 +62,54 @@ StringClear:
 
 
 ; ---------------------------------------------------------------------------
+; -- Drop characters off left side
+; --
+; -- Inputs:
+; --    t - number of characters to drop
+; --   bc - pointer to string
+; --
+		SECTION	"StringDropLeft",CODE
+StringDropLeft:
+		pusha
+
+		ld	l,t
+
+		ld	t,(bc)
+		cmp	t,l
+		j/leu	.consume
+		sub	t,l	; t = new length
+		j	.copy
+
+.consume
+		; consume string completely
+
+		ld	t,0
+		ld	(bc),t
+
+		popa
+		j	(hl)
+
+.copy		push	ft
+
+		pick	ft,2
+		ld	f,0
+		add	ft,bc
+		ld	de,ft
+		add	de,1	; source
+
+		pop	ft
+		ld	(bc+),t
+		ld	f,t
+
+.loop		ld	t,(de+)
+		ld	(bc+),t
+		dj	f,.loop
+
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Trim white space off string end
 ; --
 ; -- Inputs:

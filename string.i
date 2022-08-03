@@ -50,6 +50,7 @@ MDigitToAscii:	MACRO
 
 	GLOBAL	StringCompare
 	GLOBAL	StringClear
+	GLOBAL	StringDropLeft
 	GLOBAL	StringTrimRight
 	GLOBAL	StringAppendChar
 	GLOBAL	StringAppendChars
