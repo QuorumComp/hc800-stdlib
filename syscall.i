@@ -34,6 +34,8 @@ volinf_Used		RB	4
 volinf_Size		RB	4
 volinf_SIZEOF		RB	0
 
+
+; -- File structure fields are read only and for information only
 		RSRESET
 file_System	RW	1
 file_Length	RB	4
@@ -46,6 +48,7 @@ file_SIZEOF	RB	0
 FFLAG_DIR	EQU	$01
 
 
+; -- Directory structure fields are read only and for information only
 		RSRESET
 dir_System	RW	1
 dir_Error	RB	1
