@@ -103,7 +103,7 @@ KCharacterOut		RB	1
 KExecute		RB	1
 
 ; ---------------------------------------------------------------------------
-; -- Exit client to kernal
+; -- Exit client to kernel
 ; --
 KExit			RB	1
 

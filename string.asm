@@ -1,5 +1,5 @@
-		INCLUDE "kernal/uart_commands.i"
-		INCLUDE "kernal/uart_commands_disabled.i"
+		INCLUDE "kernel/uart_commands.i"
+		INCLUDE "kernel/uart_commands_disabled.i"
 
 		INCLUDE	"lowlevel/rc800.i"
 
