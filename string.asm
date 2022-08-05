@@ -1,6 +1,3 @@
-		INCLUDE "kernel/uart_commands.i"
-		INCLUDE "kernel/uart_commands_disabled.i"
-
 		INCLUDE	"lowlevel/rc800.i"
 
 		INCLUDE	"string.i"
@@ -192,9 +189,6 @@ StringAppendChars:
 		add	ft,hl
 		ld	hl,ft
 
-		MDebugRegisters
-		MDebugMemory bc,32
-
 		add	d,1
 		j	.start
 
@@ -374,9 +368,6 @@ StringSplit:
 MemoryCharN:
 		push	bc-hl
 
-		MDebugPrint <"MemoryCharN entry\n">
-		MDebugRegisters
-
 		ld	de,ft
 .loop		ld	t,(de)
 		cmp	t,b
@@ -433,9 +424,6 @@ StringReverseChar:
 		SECTION	"MemoryCharN",CODE
 MemoryReverseCharN:
 		push	bc-hl
-
-		MDebugPrint <"MemoryReverseCharN entry\n">
-		MDebugRegisters
 
 		ld	de,ft
 
