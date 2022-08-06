@@ -61,6 +61,13 @@ dir_SIZEOF	RB	0
 DFLAG_DIR	EQU	$01
 
 
+		RSRESET
+ver_KernelMajor	RB	1
+ver_KernelMinor	RB	1
+ver_KernelRev	RB	1
+ver_RESERVED	RB	5
+ver_SIZEOF	RB	0
+
 ; ---------------------------------------------------------------------------
 ; -- Jump vectors
 ; --
@@ -238,6 +245,15 @@ KReadFile		RB	1
 ; --   ft - directory struct
 ; --
 KCloseDirectory		RB	1
+
+; ---------------------------------------------------------------------------
+; -- Get version information
+; --
+; -- Inputs:
+; --   ft - version structure
+; --
+KGetKernelVersion	RB	1
+
 
 ; -- Set the color attribute for printing text
 ; -- Usage: MSetColor color
