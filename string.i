@@ -49,6 +49,7 @@ MDigitToAscii:	MACRO
 		ENDM
 
 	GLOBAL	StringCompare
+	GLOBAL	StringCompareCase
 	GLOBAL	StringClear
 	GLOBAL	StringDropLeft
 	GLOBAL	StringTrimRight
@@ -60,6 +61,7 @@ MDigitToAscii:	MACRO
 	GLOBAL	StringSplit
 	GLOBAL	StringReverseChar
 	GLOBAL	DigitToAscii
+	GLOBAL	CharToLower
 
 	GLOBAL	MemoryCharN
 	GLOBAL	MemoryReverseCharN

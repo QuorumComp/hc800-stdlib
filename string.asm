@@ -42,6 +42,69 @@ StringCompare:
 
 
 ; ---------------------------------------------------------------------------
+; -- Case-insensitive compare two strings
+; --
+; -- Inputs:
+; --   ft - pointer to string
+; --   bc - pointer to string
+; --
+; -- Output:
+; --    f - result of lexical comparison, use unsigned condition codes
+; --
+		SECTION	"StringCompareCase",CODE
+StringCompareCase:
+		push	bc-hl
+
+		ld	de,ft
+
+		ld	t,(bc+)
+		ld	f,t
+		ld	t,(de+)
+		cmp	t,f
+		push	ft
+		ld/ltu	t,f
+		ld	l,t
+
+.loop		ld	t,(bc+)
+		push	hl
+		jal	CharToLower
+		pop	hl
+		ld	h,t
+		ld	t,(de+)
+		push	hl
+		jal	CharToLower
+		pop	hl
+		cmp	t,h
+		j/ne	.exit
+		dj	l,.loop
+
+		popa
+		j	(hl)
+
+.exit		swap	ft
+		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Convert an ASCII (A-Z) character to lower case
+; --
+; -- Inputs:
+; --    t - character
+; --
+; -- Outputs:
+; --    t - character
+; --
+CharToLower:
+		cmp	t,'A'
+		j/ltu	.done
+		cmp	t,'Z'
+		j/gtu	.done
+		add	t,'a'-'A'
+.done		j	(hl)
+
+
+; ---------------------------------------------------------------------------
 ; -- Clear a string (set it to the empty string)
 ; --
 ; -- Inputs:
