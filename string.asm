@@ -137,7 +137,8 @@ StringDropLeft:
 		ld	t,(bc)
 		cmp	t,l
 		j/leu	.consume
-		sub	t,l	; t = new length
+		sub	t,l
+		ld	l,t	; l = new length
 		j	.copy
 
 .consume
@@ -149,15 +150,15 @@ StringDropLeft:
 		popa
 		j	(hl)
 
-.copy		push	ft
+.copy		pop	ft
+		push	ft
 
-		pick	ft,2
 		ld	f,0
 		add	ft,bc
 		ld	de,ft
 		add	de,1	; source
 
-		pop	ft
+		ld	t,l
 		ld	(bc+),t
 		ld	f,t
 
