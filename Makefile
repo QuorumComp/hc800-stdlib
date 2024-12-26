@@ -22,12 +22,14 @@ endif
 ASSEMBLE = $(ASM) $(DEPFLAGS) $(ASMFLAGS)
 
 $(TARGET) : $(notdir $(SRCS:asm=obj))
-	$(LIB) $@ a $+
+	@echo "\033[1;33m Collect\033[0m $(@F)"
+	@$(LIB) $@ a $+
 
 %.obj : %.asm
 %.obj : %.asm $(DEPDIR)/%.d
-	$(ASSEMBLE) -o$@ $<
-	$(POSTCOMPILE)
+	@echo "\033[0;32mAssemble\033[0m $(@F)"
+	@$(ASSEMBLE) -o$@ $<
+#	$(POSTCOMPILE)
 
 $(DEPDIR)/%.d: ;
 .PRECIOUS: $(DEPDIR)/%.d
