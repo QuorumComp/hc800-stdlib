@@ -58,6 +58,7 @@ MDigitToAscii:	MACRO
 	GLOBAL	StringAppendString
 	GLOBAL	StringAppendDataString
 	GLOBAL	StringCopy
+	GLOBAL	StringCopyData
 	GLOBAL	StringSplit
 	GLOBAL	StringReverseChar
 	GLOBAL	DigitToAscii

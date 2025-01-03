@@ -270,8 +270,8 @@ StringAppendChars:
 ; -- Append string in BSS segment to end of string
 ; --
 ; -- Inputs:
-; --   ft - pointer to string
-; --   bc - pointer to chars (BSS)
+; --   ft - pointer to destination string
+; --   bc - pointer to Pascal string (BSS)
 ; --
 		SECTION	"StringAppendString",CODE
 StringAppendString:
@@ -355,6 +355,32 @@ StringCopy:
 		ld	(bc),t
 		add	de,1
 		add	bc,1
+		dj	f,.loop
+
+.exit		popa
+		j	(hl)
+
+
+; ---------------------------------------------------------------------------
+; -- Copy string
+; --
+; -- Inputs:
+; --   bc - destination
+; --   de - source
+; --
+		SECTION	"StringCopyData",CODE
+StringCopyData:
+		pusha
+
+		lco	t,(de+)
+		ld	(bc+),t
+
+		cmp	t,0
+		j/eq	.exit
+
+		ld	f,t
+.loop		lco	t,(de+)
+		ld	(bc+),t
 		dj	f,.loop
 
 .exit		popa
