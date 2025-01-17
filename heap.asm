@@ -1,9 +1,16 @@
-	INCLUDE	"heap.i"
+INCLUDE	"heap.i"
+
+; End of list is indicated by
+; IsFree = 0
+; Size = 0
+; Prev = ???
 
 		RSRESET
+; The fields that indicate end-of-list must come first
 heap_IsFree	RB	1
-heap_Prev	RW	1
 heap_Size	RW	1
+heap_EOL	RB	0
+heap_Prev	RW	1
 heap_SIZEOF	RB	0
 
 ; ---------------------------------------------------------------------------
@@ -23,11 +30,21 @@ HeapInit:
 		ld	d,1
 		ld	(ft+),d		; IsFree		
 
-		ld	d,0
-		ld	(ft+),d		; Prev		
-		ld	(ft+),d		; Prev		
+		sub	bc,heap_EOL
 
 		ld	(ft+),bc	; Size
+		add	ft,1
+
+		ld	d,0
+		ld	(ft+),d		; Prev
+		ld	(ft+),d		; Prev
+
+		add	ft,bc
+		sub	ft,heap_SIZEOF
+
+		ld	(ft+),d		; IsFree
+		ld	(ft+),d		; Size
+		ld	(ft),d		; Size
 
 		popa
 		j	(hl)
@@ -52,15 +69,10 @@ HeapAlloc:
 		ld	ft,heap
 		ld	bc,(ft+)
 
-.loop		tst	bc
-		j/eq	.fail
-
-		ld	t,(bc)
+.loop		ld	t,(bc)
 		cmp	t,0
 		j/eq	.next
 
-		add	bc,heap_Size
-		ld	ft,(bc+)
 		sub	bc,heap_Size+1
 		sub	ft,hl
 		ld	de,ft
@@ -86,8 +98,17 @@ HeapAlloc:
 		add	ft,heap_SIZEOF
 		j	.exit
 
+.no_free	ld	ft,de
+		j	.exit
+
 .next		add	bc,heap_Size
 		ld	ft,(bc+)
+
+		ld	de,ft
+		tst	de
+		j/eq	.no_free
+		ld	ft,de
+
 		sub	bc,heap_Size+1
 		add	ft,bc
 		ld	bc,ft
