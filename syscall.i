@@ -1,8 +1,6 @@
-	IFND	SYSCALL_I_INCLUDED_
+		INCLUDE	ONCE
 
-SYSCALL_I_INCLUDED_ = 1
-
-	INCLUDE	"lowlevel/scancodes.i"
+		INCLUDE	"lowlevel/scancodes.i"
 
 BLOCKDEVICE_SDA		EQU	0
 BLOCKDEVICE_SDA0	EQU	1
@@ -310,8 +308,3 @@ MDebugPrint:	MACRO
 		dj	d,.next\@
 .error\@	popa
 		ENDM
-
-
-
-
-	ENDC

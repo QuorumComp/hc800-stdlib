@@ -1,8 +1,5 @@
-	IFND	HEAP_I_INCLUDED_
-HEAP_I_INCLUDED_ = 1
+		INCLUDE	ONCE
 
-	GLOBAL	HeapInit
-	GLOBAL	HeapAlloc
-	GLOBAL	HeapFree
-
-	ENDC
+		GLOBAL	HeapInit
+		GLOBAL	HeapAlloc
+		GLOBAL	HeapFree

@@ -1,16 +1,15 @@
-	IFND	STREAM_I_INCLUDED_
-STREAM_I_INCLUDED_ = 1
+		INCLUDE	ONCE
 
-	GLOBAL	StreamDataOut
-	GLOBAL	StreamDataStringOut
-	GLOBAL	StreamBssStringOut
-	GLOBAL	StreamDigitOut
-	GLOBAL	StreamHexByteOut
-	GLOBAL	StreamHexWordOut
-	GLOBAL	StreamHexLongOut
-	GLOBAL	StreamDecimalWordOut
-	GLOBAL	StreamDecimalLongOut
-	GLOBAL	StreamMemoryDump
+		GLOBAL	StreamDataOut
+		GLOBAL	StreamDataStringOut
+		GLOBAL	StreamBssStringOut
+		GLOBAL	StreamDigitOut
+		GLOBAL	StreamHexByteOut
+		GLOBAL	StreamHexWordOut
+		GLOBAL	StreamHexLongOut
+		GLOBAL	StreamDecimalWordOut
+		GLOBAL	StreamDecimalLongOut
+		GLOBAL	StreamMemoryDump
 
 ; -- Print a string
 ; -- Usage: MPrintString <"My string">
@@ -34,5 +33,3 @@ MPrintChar:	MACRO
 		sys	KCharacterOut
 		popa
 		ENDM
-
-	ENDC

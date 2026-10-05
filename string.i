@@ -1,6 +1,4 @@
-	IFND	STRING_I_INCLUDED_
-
-STRING_I_INCLUDED_ = 1
+		INCLUDE	ONCE
 
 STRING_SIZE	EQU	256
 
@@ -48,24 +46,23 @@ MDigitToAscii:	MACRO
 		add/geu	t,'A'-'0'
 		ENDM
 
-	GLOBAL	StringCompare
-	GLOBAL	StringCompareCase
-	GLOBAL	StringClear
-	GLOBAL	StringDropLeft
-	GLOBAL	StringTrimRight
-	GLOBAL	StringAppendChar
-	GLOBAL	StringAppendChars
-	GLOBAL	StringAppendString
-	GLOBAL	StringAppendDataString
-	GLOBAL	StringCopy
-	GLOBAL	StringCopyData
-	GLOBAL	StringSplit
-	GLOBAL	StringReverseChar
-	GLOBAL	DigitToAscii
-	GLOBAL	CharToLower
+		GLOBAL	StringCompare
+		GLOBAL	StringCompareCase
+		GLOBAL	StringClear
+		GLOBAL	StringDropLeft
+		GLOBAL	StringTrimRight
+		GLOBAL	StringAppendChar
+		GLOBAL	StringAppendChars
+		GLOBAL	StringAppendString
+		GLOBAL	StringAppendDataString
+		GLOBAL	StringCopy
+		GLOBAL	StringCopyData
+		GLOBAL	StringSplit
+		GLOBAL	StringReverseChar
+		GLOBAL	DigitToAscii
+		GLOBAL	CharToLower
 
-	GLOBAL	MemoryCharN
-	GLOBAL	MemoryReverseCharN
-	GLOBAL	MemoryCompareN
+		GLOBAL	MemoryCharN
+		GLOBAL	MemoryReverseCharN
+		GLOBAL	MemoryCompareN
 
-	ENDC
