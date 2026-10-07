@@ -61,7 +61,7 @@ HeapInit:
 ; --
 		SECTION	"HeapAlloc",CODE
 HeapAlloc:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	hl,ft
 		add	hl,heap_SIZEOF
@@ -114,7 +114,7 @@ HeapAlloc:
 		ld	bc,ft
 		j	.loop
 .exit
-		pop	bc-hl
+		pop	bc/de/hl
 		j	(hl)
 
 

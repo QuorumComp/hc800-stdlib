@@ -191,7 +191,7 @@ StreamDecimalWordOut:
 ; --
 		SECTION	"StreamDecimalLongOut",CODE
 StreamDecimalLongOut:
-		push	bc-hl
+		push	bc/de/hl
 
 		swap	ft
 		ld	bc,ft
@@ -215,7 +215,7 @@ StreamDecimalLongOut:
 
 .recurse
 		; input: ft:ft' = value to print
-		push	bc-hl
+		push	bc/de/hl
 
 		swap	ft
 		ld	bc,ft
@@ -243,7 +243,7 @@ StreamDecimalLongOut:
 		ld	ft,bc
 		jal	StreamDigitOut
 
-		pop	bc-hl
+		pop	bc/de/hl
 		j	(hl)
 
 .recurse_done	popa

@@ -14,7 +14,7 @@
 ; --
 		SECTION	"StringCompare",CODE
 StringCompare:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	de,ft
 
@@ -53,7 +53,7 @@ StringCompare:
 ; --
 		SECTION	"StringCompareCase",CODE
 StringCompareCase:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	de,ft
 
@@ -456,7 +456,7 @@ StringSplit:
 ; --
 		SECTION	"MemoryCharN",CODE
 MemoryCharN:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	de,ft
 .loop		ld	t,(de)
@@ -472,7 +472,7 @@ MemoryCharN:
 		push	ft
 		ld	f,FLAGS_EQ
 
-.exit		pop	bc-hl
+.exit		pop	bc/de/hl
 		j	(hl)
 
 
@@ -489,13 +489,13 @@ MemoryCharN:
 ; --
 		SECTION	"StringReverseChar",CODE
 StringReverseChar:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	c,(ft)
 		add	ft,1
 		jal	MemoryReverseCharN
 
-		pop	bc-hl
+		pop	bc/de/hl
 		j	(hl)
 
 
@@ -513,7 +513,7 @@ StringReverseChar:
 ; --
 		SECTION	"MemoryCharN",CODE
 MemoryReverseCharN:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	de,ft
 
@@ -539,7 +539,7 @@ MemoryReverseCharN:
 		push	ft
 		ld	f,FLAGS_EQ
 
-.exit		pop	bc-hl
+.exit		pop	bc/de/hl
 		j	(hl)
 
 
@@ -557,7 +557,7 @@ MemoryReverseCharN:
 ; --
 		SECTION	"MemoryCompareN",CODE
 MemoryCompareN:
-		push	bc-hl
+		push	bc/de/hl
 
 		ld	hl,ft
 
@@ -574,7 +574,7 @@ MemoryCompareN:
 
 		ld	f,FLAGS_EQ
 
-.done		pop	bc-hl
+.done		pop	bc/de/hl
 		j	(hl)
 
 
