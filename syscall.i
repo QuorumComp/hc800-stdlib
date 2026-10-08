@@ -1,6 +1,7 @@
 		INCLUDE	ONCE
 
 		INCLUDE	"lowlevel/scancodes.i"
+		INCLUDE	"debug.i"
 
 BLOCKDEVICE_SDA		EQU	0
 BLOCKDEVICE_SDA0	EQU	1
@@ -289,12 +290,17 @@ MClearAttribute:	MACRO
 		ENDM
 
 ; -- Print a new line
+	IF DEBUG
 MNewLine:	MACRO
 		pusha
 		ld	t,10
 		sys	KCharacterOut
 		popa
 		ENDM
+	ELSE
+MNewLine:	MACRO
+		ENDM
+	ENDC
 
 ; -- Print a debug string to UART
 MDebugPrint:	MACRO
