@@ -290,19 +290,15 @@ MClearAttribute:	MACRO
 		ENDM
 
 ; -- Print a new line
-	IF DEBUG
 MNewLine:	MACRO
 		pusha
 		ld	t,10
 		sys	KCharacterOut
 		popa
 		ENDM
-	ELSE
-MNewLine:	MACRO
-		ENDM
-	ENDC
 
 ; -- Print a debug string to UART
+	IF DEBUG
 MDebugPrint:	MACRO
 		pusha
 		ld	d,\1.length
@@ -314,3 +310,7 @@ MDebugPrint:	MACRO
 		dj	d,.next\@
 .error\@	popa
 		ENDM
+	ELSE
+MDebugPrint:	MACRO
+		ENDM
+	ENDC
