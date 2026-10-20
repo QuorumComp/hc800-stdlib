@@ -1,0 +1,16 @@
+Makefile
+  h_3a90fbf9715846 4
+syscall.i
+  h_3a90fbf9715846 300
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fb186dd55551e0bea46b09e30e3f5b34b925e98b",
+  "prompts": {},
+  "humans": {
+    "h_3a90fbf9715846": {
+      "author": "Carsten Elton Sørensen <cso@rift.dk>"
+    }
+  }
+}
