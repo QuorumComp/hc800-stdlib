@@ -1,7 +1,6 @@
 		INCLUDE	ONCE
 
 		INCLUDE	"lowlevel/scancodes.i"
-		INCLUDE	"debug.i"
 
 BLOCKDEVICE_SDA		EQU	0
 BLOCKDEVICE_SDA0	EQU	1
@@ -298,7 +297,7 @@ MNewLine:	MACRO
 		ENDM
 
 ; -- Print a debug string to UART
-	IF DEBUG
+	IF _DEBUG
 MDebugPrint:	MACRO
 		pusha
 		ld	d,\1.length

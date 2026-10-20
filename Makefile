@@ -1,9 +1,7 @@
 SRCS = stream.asm string.asm
 ASMFLAGS = -g -el -z0 -i../
 DEBUG ?= 0
-ifeq ($(DEBUG),1)
-ASMFLAGS += -D_DEBUG
-endif
+ASMFLAGS += -D _DEBUG=$(DEBUG)
 TARGET = std.lib
 
 ASM = motorrc8
